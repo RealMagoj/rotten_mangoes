@@ -1,7 +1,21 @@
 class MoviesController < ApplicationController
   
   def index
+    title = "%"
+    director = "%"
+    runtime = ""
+
     @movies = Movie.all
+    if params[:runtime_in_minutes].present?
+      runtime = @movies.runtime(params[:runtime_in_minutes])
+    end
+    if params[:title].present?
+      title =  "%#{params[:title]}%"
+    end
+    if params[:director].present?
+      director =  "%#{params[:director]}%"
+    end
+    @movies = @movies.where("title LIKE ?", title).where("director LIKE ?", director).where(runtime)
   end
 
   def show

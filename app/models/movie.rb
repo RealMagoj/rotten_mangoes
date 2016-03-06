@@ -30,6 +30,17 @@ class Movie < ActiveRecord::Base
     end
   end
 
+  def self.runtime(duration)
+    case duration
+    when "1"
+      "runtime_in_minutes < 90"
+    when "2"
+      "runtime_in_minutes >= 90 AND runtime_in_minutes <= 120"
+    when "3"
+      "runtime_in_minutes > 120"
+    end
+  end
+
   protected
 
   def release_date_is_in_the_past
